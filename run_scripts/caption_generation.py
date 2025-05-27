@@ -106,6 +106,8 @@ parser.add_argument(
     default="eval_dataset/val2014/",
     help="data path",
 )
+
+parser.add_argument("--data_start_idx", type=int, default=1, help="data start idx")
 parser.add_argument("--batch_size", type=int, default=1, help="batch size")
 parser.add_argument("--num_workers", type=int, default=2, help="num workers")
 parser.add_argument("-b", "--beam", type=int, default=1)
@@ -414,6 +416,8 @@ halc_assistant_helper = halc_assistant(
 offlight = True
 
 for idx, img_id in tqdm(enumerate(range(len(img_files))), total=len(img_files)):
+    if idx <= data_start_idx:
+        continue
     img_file = img_files[img_id]
     img_id = int(img_file.split(".jpg")[0][-6:])
 
