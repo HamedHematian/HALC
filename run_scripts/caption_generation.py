@@ -228,6 +228,7 @@ debugger = args.debugger
 gt_seg_path = args.gt_seg_path
 generate_pope = args.generate_pope
 skip_num = args.skip_num
+data_start_idx = args.data_start_idx
 
 
 # ========================================
