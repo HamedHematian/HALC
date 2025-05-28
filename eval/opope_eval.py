@@ -550,7 +550,8 @@ def print_acc(pred_list, label_list):
 
     precision = float(TP) / float(TP + FP)
     recall = float(TP) / float(TP + FN)
-    f1 = 2 * precision * recall / (precision + recall)
+    beta = .2
+    f1 = (1 + beta ** 2) * precision * recall / ((beta ** 2) * precision + recall)
     acc = (TP + TN) / (TP + TN + FP + FN)
     print("Accuracy: {}".format(acc))
     print("Precision: {}".format(precision))
