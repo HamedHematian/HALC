@@ -37,7 +37,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "-d",
-    "--caption-path",
+    "--caption-path-real",
     type=str,
     required=False,
     default="/home/czr/dataset/val2014/annotations/captions_val2014.json",
@@ -47,7 +47,7 @@ parser.add_argument(
 args = parser.parse_known_args()[0]
 
 directory = args.caption_path
-caption_path = args.caption_path
+caption_path = args.caption_path_real
 
 # Assuming this script is placed in the same directory as the JSON files
 directory_path = directory
