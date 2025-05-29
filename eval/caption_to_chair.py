@@ -29,13 +29,6 @@ import argparse
 parser = argparse.ArgumentParser(description="POPE-Adv evaluation on LVLMs.")
 
 parser.add_argument(
-    "-c",
-    "--caption-path",
-    type=str,
-    required=True,
-    help="Path to the generated captions",
-)
-parser.add_argument(
     "-d",
     "--caption-path",
     type=str,
