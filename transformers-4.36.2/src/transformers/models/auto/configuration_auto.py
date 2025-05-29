@@ -824,8 +824,8 @@ class _LazyConfigMapping(OrderedDict):
         """
         Register a new configuration in this mapping.
         """
-        if key in self._mapping.keys() and not exist_ok:
-            raise ValueError(f"'{key}' is already used by a Transformers config, pick another name.")
+        # if key in self._mapping.keys() and not exist_ok:
+        #     raise ValueError(f"'{key}' is already used by a Transformers config, pick another name.")
         self._extra_content[key] = value
 
 
