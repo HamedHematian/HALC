@@ -10,14 +10,14 @@ import os
 import torch
 import torch.nn.functional as F
 import tqdm
-from diffusers import (
-    AutoencoderKL,
-    ControlNetModel,
-    DDPMScheduler,
-    DDIMScheduler,
-    PNDMScheduler,
-    UNet2DConditionModel,
-)
+# from diffusers import (
+#     AutoencoderKL,
+#     ControlNetModel,
+#     DDPMScheduler,
+#     DDIMScheduler,
+#     PNDMScheduler,
+#     UNet2DConditionModel,
+# )
 from torch import nn
 from transformers import CLIPTokenizer
 from transformers.activations import QuickGELUActivation as QuickGELU
