@@ -128,7 +128,7 @@ def sample(
         model_kwargs_cd = model_kwargs.copy()
 
         if use_cd:
-
+            print('I AM USING CD ------------------')
             model_inputs_cd = self.prepare_inputs_for_generation_cd(input_ids, **model_kwargs_cd)
             outputs_cd = self(
                 **model_inputs_cd,
