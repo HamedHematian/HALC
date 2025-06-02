@@ -2,7 +2,7 @@ dataset_name='coco' # 'aokvqa' 'gqa'
 image_folder='../data/val2014' # '/workspace/data/gqa'
 for seed in 1 2 3
 do
-for type in 'random'
+for type in 'popular'
 do
 python run_llava.py \
 --question-file ../data/POPE/${dataset_name}/${dataset_name}_pope_${type}.json \
@@ -13,7 +13,7 @@ python run_llava.py \
 --beta 0.5 \
 --seed $seed
 
-python eval_pope.py --gt_files ../data/POPE/coco/coco_pope_random.json --gen_files ../output/llava_${dataset_name}_pope_${type}_answers_agla_seed${seed}.jsonl
+python eval_pope.py --gt_files ../data/POPE/coco/coco_pope_${type}.json --gen_files ../output/llava_${dataset_name}_pope_${type}_answers_agla_seed${seed}.jsonl
 
 done
 done
