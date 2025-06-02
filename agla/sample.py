@@ -140,7 +140,7 @@ def sample(
 
             cd_alpha = model_kwargs.get("cd_alpha") if model_kwargs.get("cd_alpha") is not None else 1
             cd_beta = model_kwargs.get("cd_beta") if model_kwargs.get("cd_beta") is not None else 0.5
-
+            print('in generation', cd_alpha, cd_beta)
             cutoff = torch.log(torch.tensor(cd_beta)) + next_token_logits.max(dim=-1, keepdim=True).values
 
             diffs = (next_token_logits + cd_alpha * next_token_logits_cd)
