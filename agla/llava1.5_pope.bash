@@ -2,7 +2,7 @@ dataset_name='coco' # 'aokvqa' 'gqa'
 image_folder='../data/val2014' # '/workspace/data/gqa'
 for seed in 1 2 3
 do
-for type in 'popular'
+for type in 'adversarial'
 do
 python run_llava.py \
 --question-file ../data/POPE/${dataset_name}/${dataset_name}_pope_${type}.json \
