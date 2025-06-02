@@ -136,7 +136,9 @@ def sample(
             print('I AM USING CD ------------------')
             model_inputs_cd = self.prepare_inputs_for_generation_cd(input_ids, **model_kwargs_cd)
             print(model_inputs_cd.keys())
-            print(model_inputs_cd['input_ids'].shape, type(model_inputs_cd['images']) ,model_inputs_cd['images'].shape)
+            print(model_inputs_cd['input_ids'].shape)
+            print(type(model_inputs_cd['images']))
+            print(model_inputs_cd['images'].shape)
             print((model_inputs_cd['input_ids'] == A).all())
             print((model_inputs_cd['images'] == B).all())
             outputs_cd = self(
