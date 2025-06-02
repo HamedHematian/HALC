@@ -128,5 +128,6 @@ if __name__ == "__main__":
     parser.add_argument("--beta", type=float, default=0.5)
     parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
+    print('alpha and beta', args.alpha, args.beta)
     set_seed(args.seed)
     eval_model(args)
