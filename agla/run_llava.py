@@ -63,7 +63,6 @@ def eval_model(args):
         raw_image_tensor = image_processor.preprocess(raw_image, return_tensors='pt')['pixel_values'][0]
         
         if args.use_agla:
-            print('I am using AGLA')
             tensor_image = loader(raw_image.resize((384,384)))
             image = vis_processors["eval"](raw_image).unsqueeze(0).to(device)
             question = text_processors["eval"](question)
@@ -72,8 +71,6 @@ def eval_model(args):
             image_tensor = image_processor.preprocess(augmented_image, return_tensors='pt')['pixel_values'][0]
         else:
             image_tensor = None
-
-        print(image_tensor.shape)
         
 
         stop_str = conv.sep if conv.sep_style != SeparatorStyle.TWO else conv.sep2
@@ -131,6 +128,5 @@ if __name__ == "__main__":
     parser.add_argument("--beta", type=float, default=0.5)
     parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
-    print('alpha and beta', args.alpha, args.beta)
     set_seed(args.seed)
     eval_model(args)
