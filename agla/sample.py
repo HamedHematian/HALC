@@ -89,6 +89,10 @@ def sample(
 
     this_peer_finished = False  # used by synced_gpus only
 
+    cd_alpha = model_kwargs.get("cd_alpha") if model_kwargs.get("cd_alpha") is not None else 1
+    cd_beta = model_kwargs.get("cd_beta") if model_kwargs.get("cd_beta") is not None else 0.5
+    print('in generation', cd_alpha, cd_beta)
+    
     # auto-regressive generation
     while True:
         if synced_gpus:
@@ -105,6 +109,7 @@ def sample(
         model_inputs = self.prepare_inputs_for_generation(input_ids, **model_kwargs)
         # model_inputs.pop('position_ids')
         # forward pass to get next token
+        
         print(model_inputs.keys())
         A = model_inputs['input_ids']
         B = model_inputs['images']
