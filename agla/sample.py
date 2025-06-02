@@ -106,6 +106,8 @@ def sample(
         # model_inputs.pop('position_ids')
         # forward pass to get next token
         print(model_inputs.keys())
+        A = model_inputs['input_ids']
+        B = model_inputs['images']
         print(model_inputs['input_ids'].shape, model_inputs['images'].shape)
         outputs = self(
             **model_inputs,
@@ -121,6 +123,7 @@ def sample(
 
         ## For contrastive decoding initial
         use_cd = model_kwargs.get("images_cd") != None
+        print(use_cd, 'use_cd')
         output_attentions_wo_img = (
             output_attentions if output_attentions is not None else self.generation_config.output_attentions
         )
@@ -132,6 +135,8 @@ def sample(
         if True:
             print('I AM USING CD ------------------')
             model_inputs_cd = self.prepare_inputs_for_generation_cd(input_ids, **model_kwargs_cd)
+            print((model_inputs['input_ids'] == A).all())
+            print((model_inputs['images'] == B).all())
             print(model_inputs_cd.keys())
             print(model_inputs['input_ids'].shape, model_inputs['images'].shape)
             outputs_cd = self(
