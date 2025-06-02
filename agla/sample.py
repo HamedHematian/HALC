@@ -130,6 +130,7 @@ def sample(
         if True:
             print('I AM USING CD ------------------')
             model_inputs_cd = self.prepare_inputs_for_generation_cd(input_ids, **model_kwargs_cd)
+            print(model_inputs_cd.keys())
             outputs_cd = self(
                 **model_inputs_cd,
                 return_dict=True,
@@ -137,7 +138,7 @@ def sample(
                 output_hidden_states=output_hidden_states_wo_img,
             )
             next_token_logits_cd = outputs_cd.logits[:, -1, :]
-            
+            print('after run')
 
             cd_alpha = model_kwargs.get("cd_alpha") if model_kwargs.get("cd_alpha") is not None else 1
             cd_beta = model_kwargs.get("cd_beta") if model_kwargs.get("cd_beta") is not None else 0.5
