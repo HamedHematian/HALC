@@ -16,7 +16,7 @@ python run_llava.py \
 --beta $beta \
 --seed $seed
 
-python eval_pope.py --gen_files ./output/llava_coco_pope_adversarial_answers_agla_seed1.jsonl
+python eval_pope.py --gen_files ../output/llava_${dataset_name}_pope_${type}_answers_agla_seed${seed}_alpha_${alpha}_beta_${beta}.jsonl
 
 done
 done
