@@ -39,7 +39,6 @@ def sample(
     **model_kwargs,
 ) -> Union[SampleOutput, torch.LongTensor]:
     # init values
-    print('START SAMPLING')
     logits_processor = logits_processor if logits_processor is not None else LogitsProcessorList()
     stopping_criteria = stopping_criteria if stopping_criteria is not None else StoppingCriteriaList()
     if max_length is not None:
@@ -91,7 +90,6 @@ def sample(
 
     cd_alpha = model_kwargs.get("cd_alpha") if model_kwargs.get("cd_alpha") is not None else 1
     cd_beta = model_kwargs.get("cd_beta") if model_kwargs.get("cd_beta") is not None else 0.5
-    print('in generation', cd_alpha, cd_beta)
     
     # auto-regressive generation
     while True:
@@ -109,11 +107,6 @@ def sample(
         model_inputs = self.prepare_inputs_for_generation(input_ids, **model_kwargs)
         # model_inputs.pop('position_ids')
         # forward pass to get next token
-        
-        print(model_inputs.keys())
-        A = model_inputs['input_ids']
-        B = model_inputs['images']
-        print(model_inputs['input_ids'].shape, model_inputs['images'].shape)
         outputs = self(
             **model_inputs,
             return_dict=True,
@@ -128,7 +121,6 @@ def sample(
 
         ## For contrastive decoding initial
         use_cd = model_kwargs.get("images_cd") != None
-        print(use_cd, 'use_cd')
         output_attentions_wo_img = (
             output_attentions if output_attentions is not None else self.generation_config.output_attentions
         )
@@ -138,14 +130,13 @@ def sample(
         model_kwargs_cd = model_kwargs.copy()
 
         if True:
-            print('I AM USING CD ------------------')
             model_inputs_cd = self.prepare_inputs_for_generation_cd(input_ids, **model_kwargs_cd)
-            print(model_inputs_cd.keys())
-            print(model_inputs_cd['input_ids'].shape)
-            print(type(model_inputs_cd['images']))
-            print(model_inputs_cd['images'].shape)
-            print((model_inputs_cd['input_ids'] == A).all())
-            print((model_inputs_cd['images'] == B).all())
+            # print(model_inputs_cd.keys())
+            # print(model_inputs_cd['input_ids'].shape)
+            # print(type(model_inputs_cd['images']))
+            # print(model_inputs_cd['images'].shape)
+            # print((model_inputs_cd['input_ids'] == A).all())
+            # print((model_inputs_cd['images'] == B).all())
             outputs_cd = self(
                 **model_inputs_cd,
                 return_dict=True,
@@ -153,11 +144,9 @@ def sample(
                 output_hidden_states=output_hidden_states_wo_img,
             )
             next_token_logits_cd = outputs_cd.logits[:, -1, :]
-            print('after run')
 
             cd_alpha = model_kwargs.get("cd_alpha") if model_kwargs.get("cd_alpha") is not None else 1
             cd_beta = model_kwargs.get("cd_beta") if model_kwargs.get("cd_beta") is not None else 0.5
-            print('in generation', cd_alpha, cd_beta)
             cutoff = torch.log(torch.tensor(cd_beta)) + next_token_logits.max(dim=-1, keepdim=True).values
 
             diffs = (next_token_logits + cd_alpha * next_token_logits_cd)
