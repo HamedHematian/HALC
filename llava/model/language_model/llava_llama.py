@@ -143,6 +143,9 @@ class LlavaLlamaForCausalLM(LlamaForCausalLM, LlavaMetaForCausalLM):
     def prepare_inputs_for_generation_cd(
         self, input_ids, past_key_values=None, attention_mask=None, inputs_embeds=None, **kwargs
     ):
+
+        print('ttttt', kwargs.get("images_cd"))
+      
         if past_key_values:
             input_ids = input_ids[:, -1:]
 
