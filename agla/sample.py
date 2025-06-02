@@ -106,7 +106,7 @@ def sample(
         # model_inputs.pop('position_ids')
         # forward pass to get next token
         print(model_inputs.keys())
-        print(model_inputs['input_ids'].shape, type(model_inputs['images']))
+        print(model_inputs['input_ids'].shape, model_inputs['images'].shape)
         outputs = self(
             **model_inputs,
             return_dict=True,
@@ -133,7 +133,7 @@ def sample(
             print('I AM USING CD ------------------')
             model_inputs_cd = self.prepare_inputs_for_generation_cd(input_ids, **model_kwargs_cd)
             print(model_inputs_cd.keys())
-            print(model_inputs['input_ids'].shape, type(model_inputs['images']))
+            print(model_inputs['input_ids'].shape, model_inputs['images'].shape)
             outputs_cd = self(
                 **model_inputs_cd,
                 return_dict=True,
