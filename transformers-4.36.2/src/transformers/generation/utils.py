@@ -1430,9 +1430,9 @@ class GenerationMixin:
         num_attn_candidates: Optional[int] = 5, 
         penalty_weights: Optional[float] = 1.0,
         # VCD's kwargs
-        images_cd=None,
-        cd_alpha=1,
-        cd_beta=0.1,
+        # images_cd=None,
+        # cd_alpha=1,
+        # cd_beta=0.1,
         LVLM_backbone=None,
         **kwargs,
     ) -> Union[GenerateOutput, torch.LongTensor]:
