@@ -8,6 +8,9 @@ for beta in .2 .4 .6
 do
 for type in 'random'
 do
+
+echo "alpha $alpha, beta $beta"
+
 python run_llava.py \
 --question-file ../data/POPE/${dataset_name}/${dataset_name}_pope_${type}.json \
 --image-folder ${image_folder} \
