@@ -1,6 +1,7 @@
 dataset_name='coco' # 'aokvqa' 'gqa'
 image_folder='../data/val2014' # '/workspace/data/gqa'
 for seed in 42424
+do
 for alpha in .5 1. 1.5 2.
 do
 for beta in .2 .4 .6
