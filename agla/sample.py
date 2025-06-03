@@ -129,7 +129,7 @@ def sample(
         )
         model_kwargs_cd = model_kwargs.copy()
 
-        if True:
+        if use_cd:
             model_inputs_cd = self.prepare_inputs_for_generation_cd(input_ids, **model_kwargs_cd)
             # print(model_inputs_cd.keys())
             # print(model_inputs_cd['input_ids'].shape)
