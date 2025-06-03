@@ -121,6 +121,7 @@ def sample(
 
         ## For contrastive decoding initial
         use_cd = model_kwargs.get("images_cd") != None
+        print('use_cd', use_cd)
         output_attentions_wo_img = (
             output_attentions if output_attentions is not None else self.generation_config.output_attentions
         )
