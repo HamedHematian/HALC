@@ -371,7 +371,10 @@ class CHAIR(object):
         chair_s = (num_hallucinated_caps/num_caps)
         chair_i = (hallucinated_word_count/coco_word_count)
         # add
-        recall = num_recall_gt_objects / num_gt_objects
+        try:
+            recall = num_recall_gt_objects / num_gt_objects
+        except:
+            recall = 0.
     
         output['overall_metrics'] = {'CHAIRs': chair_s,
                                      'CHAIRi': chair_i,
