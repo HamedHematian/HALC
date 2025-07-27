@@ -1,5 +1,5 @@
 model:
-  arch: mini_gpt4
+  arch: minigpt4
 
   # vit encoder
   image_size: 224
@@ -15,7 +15,7 @@ model:
   # generation configs
   prompt: ""
 
-  llama_model: "minigpt4/vicuna-7b-v0"
+  llama_model: "please set this value to the path of vicuna model"
 
 preprocess:
     vis_processor:

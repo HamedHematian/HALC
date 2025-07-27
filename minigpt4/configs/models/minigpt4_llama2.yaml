@@ -1,5 +1,5 @@
 model:
-  arch: mini_gpt4
+  arch: minigpt4
 
   # vit encoder
   image_size: 224
@@ -13,7 +13,7 @@ model:
   prompt: ""
 
   llama_model: "meta-llama/Llama-2-7b-chat-hf"
-  # llama_model: "meta-llama/Llama-2-7b-chat-hf"
+
 preprocess:
     vis_processor:
         train:

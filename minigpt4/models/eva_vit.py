@@ -250,9 +250,8 @@ class VisionTransformer(nn.Module):
                  num_heads=12, mlp_ratio=4., qkv_bias=False, qk_scale=None, drop_rate=0., attn_drop_rate=0.,
                  drop_path_rate=0., norm_layer=nn.LayerNorm, init_values=None,
                  use_abs_pos_emb=True, use_rel_pos_bias=False, use_shared_rel_pos_bias=False,
-                 use_mean_pooling=True, init_scale=0.001, use_checkpoint=False, early_exit_layers=None):
+                 use_mean_pooling=True, init_scale=0.001, use_checkpoint=False):
         super().__init__()
-        self.early_exit_layers = early_exit_layers
         self.image_size = img_size
         self.num_classes = num_classes
         self.num_features = self.embed_dim = embed_dim  # num_features for consistency with other models
@@ -323,7 +322,6 @@ class VisionTransformer(nn.Module):
         self.head = nn.Linear(self.embed_dim, num_classes) if num_classes > 0 else nn.Identity()
 
     def forward_features(self, x):
-
         x = self.patch_embed(x)
         batch_size, seq_len, _ = x.size()
 
@@ -339,47 +337,18 @@ class VisionTransformer(nn.Module):
                 x = checkpoint.checkpoint(blk, x, rel_pos_bias)
             else:
                 x = blk(x, rel_pos_bias)
-        return x, None
-    
-    def early_exit_forward_features(self, x, early_exit_layer_idx):
+        return x
+#         x = self.norm(x)
 
-        x = self.patch_embed(x)
-        batch_size, seq_len, _ = x.size()
+#         if self.fc_norm is not None:
+#             t = x[:, 1:, :]
+#             return self.fc_norm(t.mean(1))
+#         else:
+#             return x[:, 0]
 
-        cls_tokens = self.cls_token.expand(batch_size, -1, -1)  # stole cls_tokens impl from Phil Wang, thanks
-        x = torch.cat((cls_tokens, x), dim=1)
-        if self.pos_embed is not None:
-            x = x + self.pos_embed
-        x = self.pos_drop(x)
-
-        rel_pos_bias = self.rel_pos_bias() if self.rel_pos_bias is not None else None
-        early_exit_features = []
-        # for blk_idx, blk in enumerate(self.blocks):
-        #     if self.use_checkpoint:
-        #         x = checkpoint.checkpoint(blk, x, rel_pos_bias)
-        #     else:
-        #         x = blk(x, rel_pos_bias)
-        #     if blk_idx in self.early_exit_layers:
-        #         early_exit_features.append(x)
-        for blk_idx, blk in enumerate(self.blocks):
-            if self.use_checkpoint:
-                x = checkpoint.checkpoint(blk, x, rel_pos_bias)
-            else:
-                x = blk(x, rel_pos_bias)
-
-            if blk_idx == early_exit_layer_idx:
-                early_exit_features.append(x)
-                
-        return x, early_exit_features
-
-
-    def forward(self, x, early_exit_layer_idx):
-
-        if early_exit_layer_idx != None:
-            x = self.early_exit_forward_features(x, early_exit_layer_idx)
-        else:
-            x = self.forward_features(x)
-
+    def forward(self, x):
+        x = self.forward_features(x)
+#         x = self.head(x)
         return x
 
     def get_intermediate_layers(self, x):
@@ -443,7 +412,7 @@ def convert_weights_to_fp16(model: nn.Module):
     model.apply(_convert_weights_to_fp16)
     
     
-def create_eva_vit_g(img_size=224,drop_path_rate=0.4,use_checkpoint=False,precision="fp16", early_exit_layers=None):
+def create_eva_vit_g(img_size=224,drop_path_rate=0.4,use_checkpoint=False,precision="fp16"):
     model = VisionTransformer(
         img_size=img_size,
         patch_size=14,
@@ -456,13 +425,11 @@ def create_eva_vit_g(img_size=224,drop_path_rate=0.4,use_checkpoint=False,precis
         drop_path_rate=drop_path_rate,
         norm_layer=partial(nn.LayerNorm, eps=1e-6),
         use_checkpoint=use_checkpoint,
-        early_exit_layers=early_exit_layers,
     )  
     url = "https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/eva_vit_g.pth"
     cached_file = download_cached_file(
         url, check_hash=False, progress=True
     )
-    # cached_file = "/data/xyq/bill/models/eva_vit_g.pth"
     state_dict = torch.load(cached_file, map_location="cpu")    
     interpolate_pos_embed(model,state_dict)
     

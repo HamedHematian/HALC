@@ -1,11 +1,11 @@
 model:
-  arch: mini_gpt4
-  model_type: pretrain_llama2
+  arch: minigpt4
+  model_type: pretrain_vicuna0
   max_txt_len: 160
   end_sym: "###"
-  low_resource: False
+  low_resource: True
   prompt_template: '###Human: {} ###Assistant: '
-  ckpt: 'model_checkpoints/pretrained_minigpt4_llama2_7b.pth'
+  ckpt: 'pretrained_minigpt4_llama2_7b.pth'
 
 
 datasets:
@@ -20,4 +20,3 @@ datasets:
 
 run:
   task: image_text_pretrain
-  seed: 42

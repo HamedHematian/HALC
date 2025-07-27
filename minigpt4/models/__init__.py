@@ -11,24 +11,18 @@ from omegaconf import OmegaConf
 
 from minigpt4.common.registry import registry
 from minigpt4.models.base_model import BaseModel
-from minigpt4.models.blip2 import Blip2Base
-from minigpt4.models.mini_gpt4 import MiniGPT4
-from minigpt4.models.blip2_vicuna_instruct import Blip2VicunaInstruct
-from minigpt4.models.shikra import Shikra
-from minigpt4.models.llava import LLaVa
-from minigpt4.models.mplug_owl2 import MPLUGOWL2
+from minigpt4.models.minigpt_base import MiniGPTBase
+from minigpt4.models.minigpt4 import MiniGPT4
+from minigpt4.models.minigpt_v2 import MiniGPTv2
 from minigpt4.processors.base_processor import BaseProcessor
 
 
 __all__ = [
     "load_model",
     "BaseModel",
-    "Blip2Base",
+    "MiniGPTBase",
     "MiniGPT4",
-    "Blip2VicunaInstruct",
-    "Shikra",
-    "LLaVa",
-    "MPLUGOWL2",
+    "MiniGPTv2"
 ]
 
 
