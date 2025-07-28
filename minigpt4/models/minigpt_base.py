@@ -328,6 +328,7 @@ class MiniGPTBase(BaseModel):
         temperature=1,
         do_sample=False,
         stop_words_ids=[2],
+        **kwargs
     ):
         '''
             function for generate test use
@@ -366,6 +367,7 @@ class MiniGPTBase(BaseModel):
                 min_length=min_length,
                 top_p=top_p,
                 repetition_penalty=repetition_penalty,
+                **kwargs
                 # stopping_criteria=stopping_criteria,
             )
 
