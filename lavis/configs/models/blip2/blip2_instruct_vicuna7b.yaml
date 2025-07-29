@@ -9,7 +9,7 @@ model:
   load_pretrained: True
 
   # cd_comments: set right path for pretrained blip ckpt
-  pretrained: "./checkpoints/instruct_blip_vicuna7b_trimmed.pth"
+  pretrained: "https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/InstructBLIP/instruct_blip_vicuna7b_trimmed.pth"
 
   finetuned: ""
 
